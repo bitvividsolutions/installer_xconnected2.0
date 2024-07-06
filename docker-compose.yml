@@ -1,0 +1,11 @@
+
+# include all the required docker compose files here
+
+include:
+  - docker-components/keycloak.yml
+  - docker-components/kafka.yml
+  - docker-components/itms.yml
+  - docker-components/configuration.yml
+  - docker-components/ui.yml
+  - docker-components/traefik-compose.yml
+  

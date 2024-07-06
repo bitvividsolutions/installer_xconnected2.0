@@ -1,0 +1,6 @@
+{
+    "themes": [{
+        "name" : "xconnected",
+        "types": [ "login", "admin","account" ]
+    }]
+}

@@ -1,0 +1,1 @@
+mkdir -p docker-components/keycloak/vault

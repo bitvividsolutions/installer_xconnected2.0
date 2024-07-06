@@ -1,0 +1,48 @@
+volumes:
+  postgres-config:
+
+services:
+  config-db:
+
+    image: postgres
+    volumes:
+      # - $HOME/postgres-Delta:/var/lib/postgresql/data
+      - postgres-config:/var/lib/postgresql/data
+    environment:
+     POSTGRES_DB: postgres
+     POSTGRES_USER: postgres
+     POSTGRES_PASSWORD: postgres
+    # ports:
+      # - "5432:5432"
+    networks:
+      - default
+
+  conf-api:
+
+    image: xconnected/components:conf-api-2.0
+    # ports:
+    #   - "8001:8001"
+    environment:
+      SECERET_KEY: tt+f#9@g2g&&2n#(5+yf+gog^%49djq-#z)w^-%9wjq$=7j^62
+      APP_MODE: DEV
+      DEBUG: 'false'
+      ALLOWED_HOSTS: localhost,127.0.0.1
+      BASE_PREFIX: api-config
+      ANALYTICS_GROUP_PATH: /media
+      POSTGRES_NAME: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: config-db
+      POSTGRES_PORT: 5432
+      KEYCLOAK_BASEURL: http://192.168.1.20/auth
+      KEYCLOAK_CLIENT_ID: conf-app
+      KEYCLOAK_CLIENT_SECRET: 3U4JgRF0lNtxdoFQ5C4Wptwx3GbzU714
+      KEYCLOAK_REALM: XconnectedAuthentication
+      OIDC_RP_SIGN_ALGO: RS256
+    restart: always
+    depends_on:
+      - postgres
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.config-api.rule=PathPrefix(`/api-config`,`/static`)"
+      - "traefik.http.services.config-api.loadbalancer.server.port=8001"

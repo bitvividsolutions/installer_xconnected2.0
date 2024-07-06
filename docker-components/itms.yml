@@ -1,0 +1,66 @@
+services:
+  itms-db: # port 27017
+    image: mongo:6-jammy
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: itms
+      TZ: Asia/Kolkata
+    volumes:
+      - ./itms/mongo/db:/data/db
+      - ./itms/mongo/backup:/data/backup
+    
+  minio:
+
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./minio_storage:/data
+    environment:
+      MINIO_BROWSER_REDIRECT: 'true'
+      MINIO_BROWSER_REDIRECT_URL: http://192.168.1.20/minio
+      MINIO_ROOT_USER: dinkar
+      MINIO_ROOT_PASSWORD: Strong#Pass#2022
+    command: server --console-address ":9001" /data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minio-console.rule=PathPrefix(`/minio`)"
+      - "traefik.http.services.minio-console.loadbalancer.server.port=9001"
+
+
+  itms-api:
+
+    image: xconnected/components:itms-api-2.0
+    # ports:
+    #   - "8000:8000"
+    environment:
+      ADMIN_EMAIL: deadpool@example.com
+      APP_NAME: ITMS APIS
+      MONGO_CONNECTION_URL: mongodb://root:password@itms-db:27017?retryWrites=true&w=majority
+      ITMS_MODE: PROD
+      APP_VERSION: 0.2
+      ITMS_FE_URL: https://www.google.com
+      SUB_PATH : /api-itms/v1
+      DOCS_PATH: /api-itms/swagger
+      LOGGER_FILE: itms_logs.log
+      AUTH_URL: http://192.168.1.20/auth
+      REALM_NAME: XconnectedAuthentication
+      CLIENT_ID: itms
+      CLIENT_SECRET: UdpmcCb8IVlbDvkTEzLlS8DEPyYHCHag
+      MINIO_ENDPOINT: 127.0.0.1:9000
+      MINIO_ACCESS_KEY: AcIWhkN5AvOpRaSGX9Pj
+      MINIO_SECRET_KEY: gV3hFOA9GZZ1qWOjpOB2qDRz126UHgzvh3E78q2L
+      ITMS_BUCKET_NAME: itms-blob-storage
+      CHALLAN_BUCKET_NAME: challan-objects
+    restart: always
+    depends_on:
+      - itms-db
+      - minio
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.itms-api.rule=PathPrefix(`/api-itms`)"
+      - "traefik.http.services.itms-api.loadbalancer.server.port=8000"
+

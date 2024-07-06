@@ -1,0 +1,6 @@
+services:
+  log-config:
+    logging:
+      options:
+              max-size: "10m"
+    

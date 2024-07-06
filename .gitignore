@@ -1,0 +1,6 @@
+.env
+docker-components/keycloak/certs
+docker-components/keycloak/vault
+docker-components/minio_storage
+docker-components/itms/
+
