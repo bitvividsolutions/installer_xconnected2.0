@@ -8,7 +8,7 @@ services:
     #   - "4201:4201"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.itms.rule=PathPrefix(`/itms`)"
+      - "traefik.http.routers.itms.rule=PathPrefix(`/itms-app`)"
       - "traefik.http.services.itms.loadbalancer.server.port=4201"
 
   config-app:
@@ -20,7 +20,7 @@ services:
     #   - "4202:4202"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.conf.rule=PathPrefix(`/conf`)"
+      - "traefik.http.routers.conf.rule=PathPrefix(`/conf-app`)"
       - "traefik.http.services.conf.loadbalancer.server.port=4202"
 
 
