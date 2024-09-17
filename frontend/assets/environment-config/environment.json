@@ -2,9 +2,5 @@
   "production":true,
   "authUrl":"http://192.168.29.42/auth",
   "itmsApiUrl":"http://192.168.29.42/api-itms",
-  "configApiUrl":"http://192.168.29.42/api-config",
- "themeVariant":"MAT",
- "customLogo":"/assets/images/sensecure.png",
- "customIcon":"/assets/images/Icon.png"
-
+  "configApiUrl":"http://192.168.29.42/api-config"
 } 

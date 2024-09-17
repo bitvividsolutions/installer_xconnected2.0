@@ -45,7 +45,7 @@ spec:
         - name: LOGGER_FILE
           value: "itms_logs.log"
         - name: AUTH_URL
-          value: "http://192.168.1.20/auth"
+          value: "http://192.168.29.42/auth"
         - name: REALM_NAME
           value: "XconnectedAuthentication"
         - name: CLIENT_ID
@@ -53,11 +53,11 @@ spec:
         - name: CLIENT_SECRET
           value: "UdpmcCb8IVlbDvkTEzLlS8DEPyYHCHag"
         - name: MINIO_ENDPOINT
-          value: "192.168.1.20:9000"
+          value: "192.168.29.42:9000"
         - name: MINIO_ACCESS_KEY
-          value: "AcIWhkN5AvOpRaSGX9Pj"
+          value: "9KmvkrsFx56Kczw8b4Pf"
         - name: MINIO_SECRET_KEY
-          value: "gV3hFOA9GZZ1qWOjpOB2qDRz126UHgzvh3E78q2L"
+          value: "SdNCNq6z9cVSNBfSCxOGpWhaQG1SeAQzeqZhBgQG"
         - name: ITMS_BUCKET_NAME
           value: "itms-blob-storage"
         - name: CHALLAN_BUCKET_NAME
