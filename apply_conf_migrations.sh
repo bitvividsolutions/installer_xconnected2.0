@@ -1,0 +1,1 @@
+kubectl exec -it $(kubectl get pods -l app=conf-api -n xconnected -o jsonpath="{.items[0].metadata.name}") -n xconnected -- python manage.py migrate
