@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: itms-api-deployment
+  namespace: xconnected
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: itms-api
+  template:
+    metadata:
+      labels:
+        app: itms-api
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+      - name: itms-api
+        image: xconnected/components:itms-api-2.5
+        args:
+        - uvicorn 
+        - main:app
+        - --host
+        - "0.0.0.0"
+        - --port
+        - "8000"
+        env:
+        - name: ADMIN_EMAIL
+          value: "deadpool@example.com"
+        - name: APP_NAME
+          value: "ITMS APIS"
+        - name: MONGO_CONNECTION_URL
+          value: "mongodb://root:password@mongodb:27017/?retryWrites=true&w=majority"
+        - name: ITMS_MODE
+          value: "PROD"
+        - name: APP_VERSION
+          value: "0.2"
+        - name: ITMS_FE_URL
+          value: "https://www.google.com"
+        - name: SUB_PATH
+          value: "/api-itms/v1"
+        - name: DOCS_PATH
+          value: "/api-itms/swagger"
+        - name: LOGGER_FILE
+          value: "itms_logs.log"
+        - name: AUTH_URL
+          value: "http://192.168.1.20/auth"
+        - name: REALM_NAME
+          value: "XconnectedAuthentication"
+        - name: CLIENT_ID
+          value: "itms"
+        - name: CLIENT_SECRET
+          value: "UdpmcCb8IVlbDvkTEzLlS8DEPyYHCHag"
+        - name: MINIO_ENDPOINT
+          value: "192.168.1.20:9000"
+        - name: MINIO_ACCESS_KEY
+          value: "AcIWhkN5AvOpRaSGX9Pj"
+        - name: MINIO_SECRET_KEY
+          value: "gV3hFOA9GZZ1qWOjpOB2qDRz126UHgzvh3E78q2L"
+        - name: ITMS_BUCKET_NAME
+          value: "itms-blob-storage"
+        - name: CHALLAN_BUCKET_NAME
+          value: "challan-objects"
