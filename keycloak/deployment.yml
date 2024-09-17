@@ -20,7 +20,7 @@ spec:
           - start
           ports:
             - containerPort: 8080
-            - containerPort: 8443
+            #- containerPort: 8443
           env:
             - name: KC_DB
               value: postgres

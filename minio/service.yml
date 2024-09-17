@@ -11,5 +11,6 @@ spec:
     - port: 9001
       name: "portal"
       targetPort: 9001
+  type: LoadBalancer
   selector:
     app: minio

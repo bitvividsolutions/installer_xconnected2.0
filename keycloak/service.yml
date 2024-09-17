@@ -8,8 +8,13 @@ spec:
     - port: 8080
       name: "http"
       targetPort: 8080
-    - port: 8443
-      name: "https"
-      targetPort: 8443
+    # - port: 8443
+    #   name: "https"
+    #   targetPort: 8443
+  # type: LoadBalancer
   selector:
     app: keycloak
+# status:
+#   loadBalancer:
+#     ingress:
+#       - ip: 192.168.1.21
