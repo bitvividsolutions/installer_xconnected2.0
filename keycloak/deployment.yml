@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+  namespace: xconnected
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+        - name: keycloak
+          image: quay.io/keycloak/keycloak:25.0.0
+          args:
+          - start
+          ports:
+            - containerPort: 8080
+            - containerPort: 8443
+          env:
+            - name: KC_DB
+              value: postgres
+            - name: KC_METRICS_ENABLED
+              value: "true"
+            - name: KC_DB_URL_HOST
+              value: postgres
+            - name: KC_DB_URL_DATABASE
+              value: keycloak
+            - name: KC_DB_URL_PORT
+              value: "5432"
+            - name: KC_DB_USERNAME
+              value: keycloak
+            - name: KC_DB_PASSWORD
+              value: password
+            - name: KEYCLOAK_ADMIN
+              value: admin
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              value: Pa55w0rd
+            - name: PROXY_ADDRESS_FORWARDING
+              value: "true"
+            - name: KC_HEALTH_ENABLED
+              value: "true"
+            - name: KC_HOSTNAME_STRICT
+              value: "false"
+            - name: KC_HTTP_ENABLED
+              value: "true"
+            - name: KC_HTTP_HOST
+              value: "0.0.0.0"
+            - name: KC_HTTPS_CERTIFICATE_FILE
+              value: /etc/x509/https/keycloak.crt
+            - name: KC_HTTPS_CERTIFICATE_KEY_FILE
+              value: /etc/x509/https/keycloak.key
+            - name: KC_VAULT
+              value: file
+            - name: KC_VAULT_DIR
+              value: /opt/vault/
+            - name: KC_VAULT_PASS
+              value: admin123
+            - name: KC_HTTP_RELATIVE_PATH
+              value: /auth
+            - name: KC_SPI_THEME_ACCOUNT_THEME
+              value: xconnected
+            - name: KC_SPI_THEME_LOGIN_THEME
+              value: xconnected
+            - name: KC_SPI_THEME_ADMIN_THEME
+              value: xconnected
+            - name: KC_TRANSACTION_XA_ENABLED
+              value: "true"
+            - name: KC_TRANSACTION_MANAGER_ENABLE_RECOVERY
+              value: "true"
+            - name: QUARKUS_TRANSACTION_MANAGER_ENABLE_RECOVERY
+              value: "true"
+            - name: KC_CACHE
+              value: ispn
+            - name: KC_CACHE_STACK
+              value: udp
+            - name: JDBC_PARAMS
+              value: "ssl=true"
+          volumeMounts:
+            - name: keycloak-themes
+              mountPath: /opt/keycloak/themes
+            - name: keycloak-certs
+              mountPath: /etc/x509/https/
+            - name: keycloak-vault
+              mountPath: /opt/vault/
+          
+      volumes:
+        - name: keycloak-themes
+          hostPath:
+            path: /home/rishi/work/installer_xconnected2.0/keycloak/xconnected/themes
+        - name: keycloak-certs
+          hostPath:
+            path: /home/rishi/work/installer_xconnected2.0/keycloak/certs/
+        - name: keycloak-vault
+          hostPath:
+            path: /home/rishi/work/installer_xconnected2.0/keycloak/vault/

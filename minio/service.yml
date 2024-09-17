@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-service
+  namespace: xconnected
+spec:
+  ports:
+    - port: 9000
+      name: "main"
+      targetPort: 9000
+    - port: 9001
+      name: "portal"
+      targetPort: 9001
+  selector:
+    app: minio
