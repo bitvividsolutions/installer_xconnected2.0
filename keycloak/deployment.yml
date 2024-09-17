@@ -91,10 +91,10 @@ spec:
       volumes:
         - name: keycloak-themes
           hostPath:
-            path: /home/rishi/work/installer_xconnected2.0/keycloak/xconnected/themes
+            path: /home/ravana/Projects/Kubernetes/installer_xconnected2.0/keycloak/xconnected/themes
         - name: keycloak-certs
           hostPath:
-            path: /home/rishi/work/installer_xconnected2.0/keycloak/certs/
+            path: /home/ravana/Projects/Kubernetes/installer_xconnected2.0/keycloak/certs/
         - name: keycloak-vault
           hostPath:
-            path: /home/rishi/work/installer_xconnected2.0/keycloak/vault/
+            path: /home/ravana/Projects/Kubernetes/installer_xconnected2.0/keycloak/vault/

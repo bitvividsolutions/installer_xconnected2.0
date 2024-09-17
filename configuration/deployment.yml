@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conf-api
+  namespace: xconnected
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: conf-api
+  template:
+    metadata:
+      labels:
+        app: conf-api
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+      - name: conf-api
+        image: xconnected/components:conf-api-2.5
+        ports:
+          - containerPort: 8001
+        env:
+          - name: SECRET_KEY
+            value: "tt+f#9@g2g&&2n#(5+yf+gog^%49djq-#z)w^-%9wjq$=7j^62"
+          - name: APP_MODE
+            value: "DEV"
+          - name: DEBUG
+            value: "false"
+          - name: ALLOWED_HOSTS
+            value: "localhost,127.0.0.1"
+          - name: BASE_PREFIX
+            value: "api-config"
+          - name: ANALYTICS_GROUP_PATH
+            value: "/media"
+          - name: POSTGRES_NAME
+            value: "postgres"
+          - name: POSTGRES_USER
+            value: "postgres"
+          - name: POSTGRES_PASSWORD
+            value: "postgres"
+          - name: POSTGRES_HOST
+            value: "config-db"
+          - name: POSTGRES_PORT
+            value: "5432"
+          - name: KEYCLOAK_BASEURL
+            value: "http://192.168.29.42/auth"
+          - name: KEYCLOAK_CLIENT_ID
+            value: "conf-app"
+          - name: KEYCLOAK_CLIENT_SECRET
+            value: "3U4JgRF0lNtxdoFQ5C4Wptwx3GbzU714"
+          - name: KEYCLOAK_REALM
+            value: "XconnectedAuthentication"
+          - name: OIDC_RP_SIGN_ALGO
+            value: "RS256"
+        volumeMounts:
+          - mountPath: "/media"
+            name: media-volume
+      volumes:
+        - name: media-volume
+          persistentVolumeClaim:
+            claimName: conf-api-pvc

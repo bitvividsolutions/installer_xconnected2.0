@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conf-db
+  namespace: xconnected
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: conf-db
+  template:
+    metadata:
+      labels:
+        app: conf-db
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:latest
+        env:
+          - name: POSTGRES_DB
+            value: postgres
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_PASSWORD
+            value: postgres
+        volumeMounts:
+          - name: postgres2-storage
+            mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres2-storage
+          persistentVolumeClaim:
+            claimName: conf-db-pvc

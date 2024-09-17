@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: conf-db
+  namespace: xconnected
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: conf-db
