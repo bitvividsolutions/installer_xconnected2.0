@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: itms-app
+  namespace: xconnected
+  labels:
+    app: itms-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: itms-app
+  template:
+    metadata:
+      labels:
+        app: itms-app
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+      - name: itms-app
+        image: xconnected/components:itms-app-2.0
+        ports:
+        - containerPort: 4201

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-app
+  namespace: xconnected
+  labels:
+    app: home-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: home-app
+  template:
+    metadata:
+      labels:
+        app: home-app
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+      - name: home-app
+        image: xconnected/components:home-app-2.5
+        ports:
+        - containerPort: 4200
+        volumeMounts:
+        - name: environment-config
+          mountPath: /usr/share/nginx/html/assets/environment.json
+          subPath: environment.json
+        - name: federation-config
+          mountPath: /usr/share/nginx/html/assets/federation.manifest.json
+          subPath: federation.manifest.json
+      volumes:
+      - name: environment-config
+        hostPath:
+          path: /home/ravana/Projects/Kubernetes/installer_xconnected2.0/frontend/assets/environment-config
+      - name: federation-config
+        hostPath:
+          path: /home/ravana/Projects/Kubernetes/installer_xconnected2.0/frontend/assets/federation-config

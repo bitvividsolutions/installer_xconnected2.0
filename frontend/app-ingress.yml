@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+  namespace: xconnected
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  rules:
+  -
+    http:
+      paths:
+      - path: /itms-app
+        pathType: Prefix
+        backend:
+          service:
+            name: itms-app
+            port:
+              number: 4201
+      - path: /conf-app
+        pathType: Prefix
+        backend:
+          service:
+            name: config-app
+            port:
+              number: 4202
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: home-app
+            port:
+              number: 4200

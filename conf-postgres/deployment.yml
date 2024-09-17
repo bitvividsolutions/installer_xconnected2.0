@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: conf-db
+  name: config-db
   namespace: xconnected
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: conf-db
+      app: config-db
   template:
     metadata:
       labels:
-        app: conf-db
+        app: config-db
     spec:
       containers:
       - name: postgres
@@ -29,4 +29,4 @@ spec:
       volumes:
         - name: postgres2-storage
           persistentVolumeClaim:
-            claimName: conf-db-pvc
+            claimName: config-db-pvc

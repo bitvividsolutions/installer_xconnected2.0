@@ -1,0 +1,5 @@
+{
+  "itms": "http://192.168.29.42/itms-app/remoteEntry.json",
+  "configurations": "http://192.168.29.42/conf-app/remoteEntry.json",
+	"gpva": "http://192.168.29.42/remoteEntry.json"
+}
