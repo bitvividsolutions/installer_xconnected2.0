@@ -25,14 +25,14 @@ spec:
         volumeMounts:
         - name: environment-config
           mountPath: /usr/share/nginx/html/assets/environment.json
-          subPath: environment.json
+          # subPath: environment.json
         - name: federation-config
           mountPath: /usr/share/nginx/html/assets/federation.manifest.json
-          subPath: federation.manifest.json
+          # subPath: federation.manifest.json
       volumes:
       - name: environment-config
         hostPath:
-          path: /home/ravana/Projects/Kubernetes/installer_xconnected2.0/frontend/assets/environment-config
+          path: /data/fe/ui/home/assets/environment.json
       - name: federation-config
         hostPath:
-          path: /home/ravana/Projects/Kubernetes/installer_xconnected2.0/frontend/assets/federation-config
+          path: /data/fe/ui/home/assets/federation.manifest.json

@@ -1,6 +1,0 @@
-{
-  "production":true,
-  "authUrl":"http://192.168.29.42/auth",
-  "itmsApiUrl":"http://192.168.29.42/api-itms",
-  "configApiUrl":"http://192.168.29.42/api-config"
-} 

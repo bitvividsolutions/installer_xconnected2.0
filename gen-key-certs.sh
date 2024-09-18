@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # Define certificate and key file names
-mkdir -p keycloak/certs
-CERT_FILE="keycloak/certs/keycloak.crt"
-KEY_FILE="keycloak/certs/keycloak.key"
+sudo mkdir -p /data/keycloak/certs
+CERT_FILE="/data/keycloak/certs/keycloak.crt"
+KEY_FILE="/data/keycloak/certs/keycloak.key"
+
 
 # Certificate subject information
 CERT_SUBJECT="/C=IN/ST=MP/L=INDORE/O=BitvividSolutions/OU=IT/CN=auth.localhost"
@@ -12,7 +13,7 @@ CERT_SUBJECT="/C=IN/ST=MP/L=INDORE/O=BitvividSolutions/OU=IT/CN=auth.localhost"
 VALIDITY_DAYS=365
 
 # Generate a self-signed certificate
-openssl req -x509 -nodes -newkey rsa:2048 -keyout "$KEY_FILE" -out "$CERT_FILE" -days "$VALIDITY_DAYS" -subj "$CERT_SUBJECT"
+sudo openssl req -x509 -nodes -newkey rsa:2048 -keyout "$KEY_FILE" -out "$CERT_FILE" -days "$VALIDITY_DAYS" -subj "$CERT_SUBJECT"
 
 # Check if the certificate and key were generated successfully
 if [ $? -eq 0 ]; then
@@ -22,3 +23,6 @@ if [ $? -eq 0 ]; then
 else
   echo "Certificate generation failed."
 fi
+
+sudo chmod 644 $CERT_FILE
+sudo chmod 644 $KEY_FILE

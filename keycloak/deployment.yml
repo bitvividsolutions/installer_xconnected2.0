@@ -20,7 +20,7 @@ spec:
           - start
           ports:
             - containerPort: 8080
-            #- containerPort: 8443
+            - containerPort: 8443
           env:
             - name: KC_DB
               value: postgres
@@ -87,14 +87,13 @@ spec:
               mountPath: /etc/x509/https/
             - name: keycloak-vault
               mountPath: /opt/vault/
-          
       volumes:
         - name: keycloak-themes
           hostPath:
-            path: /home/ravana/Projects/Kubernetes/installer_xconnected2.0/keycloak/xconnected/themes
+            path: /data/keycloak/themes
         - name: keycloak-certs
           hostPath:
-            path: /home/ravana/Projects/Kubernetes/installer_xconnected2.0/keycloak/certs/
+            path: /data/keycloak/certs/
         - name: keycloak-vault
           hostPath:
-            path: /home/ravana/Projects/Kubernetes/installer_xconnected2.0/keycloak/vault/
+            path: /data/keycloak/vault/
