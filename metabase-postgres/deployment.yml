@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metabase-postgres
+  namespace: xconnected
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metabase-postgres
+  template:
+    metadata:
+      labels:
+        app: metabase-postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:13
+        env:
+        - name: POSTGRES_DB
+          value: "metabase"
+        - name: POSTGRES_USER
+          value: "metabase"
+        - name: POSTGRES_PASSWORD
+          value: "strongpassword"
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: metabase-db-pvc

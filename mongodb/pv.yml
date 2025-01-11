@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: conf-api-pv
+  name: mongodb-pv
   namespace: xconnected
 spec:
   capacity:
-    storage: 1Gi
+    storage: 50Gi
   accessModes:
     - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: manual
   hostPath:
-    path: "/data/conf-api"
+    path: /data/mongodb  # Adjust path as needed
+  storageClassName: manual
+

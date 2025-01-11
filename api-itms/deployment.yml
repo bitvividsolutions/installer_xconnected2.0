@@ -4,7 +4,7 @@ metadata:
   name: itms-api-deployment
   namespace: xconnected
 spec:
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
       app: itms-api
@@ -18,6 +18,7 @@ spec:
       containers:
       - name: itms-api
         image: xconnected/components:itms-api-2.5
+        imagePullPolicy: Always
         args:
         - uvicorn 
         - main:app
@@ -27,7 +28,7 @@ spec:
         - "8000"
         env:
         - name: ADMIN_EMAIL
-          value: "deadpool@example.com"
+          value: "amans@bitvividsolutions.com"
         - name: APP_NAME
           value: "ITMS APIS"
         - name: MONGO_CONNECTION_URL
@@ -45,7 +46,7 @@ spec:
         - name: LOGGER_FILE
           value: "itms_logs.log"
         - name: AUTH_URL
-          value: "http://192.168.1.20/auth"
+          value: "http://10.72.5.6/auth"
         - name: REALM_NAME
           value: "XconnectedAuthentication"
         - name: CLIENT_ID
@@ -53,11 +54,11 @@ spec:
         - name: CLIENT_SECRET
           value: "UdpmcCb8IVlbDvkTEzLlS8DEPyYHCHag"
         - name: MINIO_ENDPOINT
-          value: "192.168.29.42:9000"
+          value: "10.72.5.6:9000"
         - name: MINIO_ACCESS_KEY
-          value: "9KmvkrsFx56Kczw8b4Pf"
+          value: "Mni2mST8Jefl6qnZkEFl"
         - name: MINIO_SECRET_KEY
-          value: "SdNCNq6z9cVSNBfSCxOGpWhaQG1SeAQzeqZhBgQG"
+          value: "6AjO9Geqqf4GRUXxophcdzKvSAUSMhCXA9Dg8NK6"
         - name: ITMS_BUCKET_NAME
           value: "itms-blob-storage"
         - name: CHALLAN_BUCKET_NAME

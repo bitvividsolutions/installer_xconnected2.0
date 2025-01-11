@@ -20,6 +20,7 @@ spec:
       containers:
       - name: home-app
         image: xconnected/components:home-app-2.5
+        imagePullPolicy: Always
         ports:
         - containerPort: 4200
         volumeMounts:
@@ -29,6 +30,8 @@ spec:
         - name: federation-config
           mountPath: /usr/share/nginx/html/assets/federation.manifest.json
           # subPath: federation.manifest.json
+        - name: logo-config
+          mountPath: /usr/share/nginx/html/assets/logos/sensecure.png
       volumes:
       - name: environment-config
         hostPath:
@@ -36,3 +39,6 @@ spec:
       - name: federation-config
         hostPath:
           path: /data/fe/ui/home/assets/federation.manifest.json
+      - name: logo-config
+        hostPath:
+          path: /data/fe/ui/home/assets/logos/sensecure.png

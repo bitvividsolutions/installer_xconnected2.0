@@ -34,4 +34,4 @@ spec:
       accessModes: ["ReadWriteOnce"]
       resources:
         requests:
-          storage: 10Gi  # Set the storage size
+          storage: 50Gi  # Set the storage size

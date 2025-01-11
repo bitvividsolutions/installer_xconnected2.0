@@ -1,0 +1,9 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: mb-engine-rewrite
+  namespace: xconnected
+spec:
+  replacePathRegex:
+    regex: "^/mb_engine(/|$)(.*)"
+    replacement: "/$2"

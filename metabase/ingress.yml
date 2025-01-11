@@ -1,18 +1,20 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: api-itms-ingress
+  name: metabase-ingress
   namespace: xconnected
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: xconnected-mb-engine-rewrite@kubernetescrd
 spec:
   rules:
-  - http:
+  - 
+    http:
       paths:
-      - path: /api-itms
+      - path: /mb_engine
         pathType: Prefix
         backend:
           service:
-            name: itms-api-service
+            name: metabase
             port:
-              number: 8000 
+              number: 3000

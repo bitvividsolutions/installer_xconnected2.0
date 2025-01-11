@@ -9,4 +9,4 @@ spec:
     targetPort: 27017
   selector:
     app: mongodb
-  type: ClusterIP  # Use NodePort or LoadBalancer if you want external access
+  type: LoadBalancer  # Use NodePort or LoadBalancer if you want external access

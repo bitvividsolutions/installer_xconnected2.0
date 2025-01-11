@@ -13,6 +13,8 @@ spec:
       labels:
         app: minio
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: "itmsmainindore"
       containers:
       - name: minio
         image: quay.io/minio/minio:latest
@@ -34,5 +36,7 @@ spec:
           mountPath: /data
       volumes:
       - name: minio-storage
-        persistentVolumeClaim:
-          claimName: minio-pvc  # this comes from pvc claim # mentioned in pvc.yml
+        hostPath:
+          path: /data/minio
+            #persistentVolumeClaim:
+          #claimName: minio-pvc  # this comes from pvc claim # mentioned in pvc.yml

@@ -13,9 +13,13 @@ spec:
       labels:
         app: postgres
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: "itmsmainindore"
+
       containers:
+
         - name: postgres
-          image: postgres:latest
+          image: postgres:16
           ports:
             - containerPort: 5432
           env:

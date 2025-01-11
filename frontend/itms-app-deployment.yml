@@ -19,6 +19,7 @@ spec:
         - name: regcred
       containers:
       - name: itms-app
-        image: xconnected/components:itms-app-2.0
+        image: xconnected/components:itms-app-2.5
+        imagePullPolicy: Always
         ports:
         - containerPort: 4201

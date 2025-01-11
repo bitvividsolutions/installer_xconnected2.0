@@ -5,9 +5,9 @@ metadata:
   namespace: xconnected
 spec:
   capacity:
-    storage: 2Gi
+    storage: 50Ti
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /data/minio # path form the physical disk 
+    path: /data # path form the physical disk 
     
