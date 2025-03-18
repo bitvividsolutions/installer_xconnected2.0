@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: cadvisor
+  namespace: xconnected
+  labels:
+    k8s-app: cadvisor
+spec:
+  selector:
+    matchLabels:
+      k8s-app: cadvisor
+  template:
+    metadata:
+      labels:
+        k8s-app: cadvisor
+    spec:
+      containers:
+        - name: cadvisor
+          image: gcr.io/cadvisor/cadvisor:v0.47.2
+          ports:
+            - containerPort: 8081
+              name: http-metrics
+          args:
+            - "--port=8081"
+          securityContext:
+            privileged: true  # Required for accessing host resources
+          volumeMounts:
+            - mountPath: /var/run/docker.sock
+              name: docker-sock
+            - mountPath: /sys
+              name: sys
+            - mountPath: /var/lib/docker
+              name: docker-root
+      volumes:
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock  # Ensure this path exists
+        - name: sys
+          hostPath:
+            path: /sys
+        - name: docker-root
+          hostPath:
+            path: /var/lib/docker

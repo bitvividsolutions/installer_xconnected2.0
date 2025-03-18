@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-exporter
+  namespace: xconnected
+  labels:
+    app: node-exporter
+spec:
+  selector:
+    matchLabels:
+      app: node-exporter
+  template:
+    metadata:
+      labels:
+        app: node-exporter
+    spec:
+      hostNetwork: true  # Allows direct access to host network
+      hostPID: true  # Enables process monitoring
+      containers:
+        - name: node-exporter
+          image: quay.io/prometheus/node-exporter:latest
+          securityContext:
+            privileged: true  # Required for accessing system metrics
+          ports:
+            - containerPort: 9100
+              hostPort: 9100
+              protocol: TCP
+          volumeMounts:
+            - name: procfs
+              mountPath: /host/proc
+              readOnly: true
+            - name: sysfs
+              mountPath: /host/sys
+              readOnly: true
+            - name: rootfs
+              mountPath: /rootfs
+              readOnly: true
+          command: ["/bin/node_exporter"]
+          args:
+            - "--path.procfs=/host/proc"
+            - "--path.sysfs=/host/sys"
+            - "--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|run|var/lib/docker)($|/)"
+      volumes:
+        - name: procfs
+          hostPath:
+            path: /proc
+            type: Directory
+        - name: sysfs
+          hostPath:
+            path: /sys
+            type: Directory
+        - name: rootfs
+          hostPath:
+            path: /
+            type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-exporter
+  namespace: xconnected
+spec:
+  selector:
+    app: node-exporter
+  ports:
+    - name: metrics
+      protocol: TCP
+      port: 9100
+      targetPort: 9100
+  type: ClusterIP  # Change to LoadBalancer if you need external access

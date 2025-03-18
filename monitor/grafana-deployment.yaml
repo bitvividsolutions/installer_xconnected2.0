@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  namespace: xconnected
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana
+        env:
+        - name: GF_SERVER_ROOT_URL
+          value: "http://192.168.29.42/gf_ana"
+        - name: GF_SECURITY_ALLOW_EMBEDDING
+          value: "true"
+        - name: GF_SERVER_SERVE_FROM_SUB_PATH
+          value: "true"
+        volumeMounts:
+          - name: storage-volume
+            mountPath: /var/lib/grafana
+      volumes:
+        - name: storage-volume
+          hostPath:
+            path: /data/grafana
+            type: Directory
