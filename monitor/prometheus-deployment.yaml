@@ -13,7 +13,7 @@ spec:
       labels:
         app: prometheus
     spec:
-      serviceAccountName: xconnected
+      #serviceAccountName: xconnected
       containers:
       - name: prometheus
         image: prom/prometheus
