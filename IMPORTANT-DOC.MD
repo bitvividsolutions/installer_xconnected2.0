@@ -20,3 +20,10 @@ kubectl exec -it mongodb-0 -n xconnected -- /bin/bash -c "/tmp/back_mongo_script
 3 1 * * * cd /you_directory/ && sh clear_mongo_35days.sh && echo "MONGO DATA clear successfully"
 5 12 * * * /usr/bin/python3 /you_directory/clean_minio.py && echo "Minio DATA CLEAR"
 ```
+
+
+### ADD SOME PERMISSION IF GETTING THE ERROR IN GRAFANA 
+```bash
+sudo mkdir -p /data/prometheus
+sudo chmod 777 /data/prometheus
+```
