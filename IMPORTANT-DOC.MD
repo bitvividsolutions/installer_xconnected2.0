@@ -22,8 +22,50 @@ kubectl exec -it mongodb-0 -n xconnected -- /bin/bash -c "/tmp/back_mongo_script
 ```
 
 
-### ADD SOME PERMISSION IF GETTING THE ERROR IN GRAFANA 
+### ADD SOME PERMISSION IF GETTING THE ERROR IN GRAFANA / PROMETHUS
 ```bash
 sudo mkdir -p /data/prometheus
 sudo chmod 777 /data/prometheus
+sudo mkdir -p /data/grafana
+sudo chmod 777 /data/grafana
+```
+
+### ADD MULTIPLE NODE EXPORTERS 
+```yaml
+- job_name: 'node-exporter'
+  static_configs:
+    - targets: 
+        - 'node-exporter.xconnected.svc.cluster.local:9100'
+        - '10.2.1.122:9100'
+```
+
+### FOR MONGODB
+```yaml
+- job_name: 'mongodb-exporter'
+  static_configs:
+    - targets:
+        - 'mongodb-exporter.xconnected.svc.cluster.local:9216'
+```
+
+***MAKE SURE TO UPDATE SE IN KEYCLOAK DEPOLYMENT `KC_METRICS_ENABLED=true`***
+
+
+### DOWNLOAD and INSTALL THE MC CLIENT FOR MINIO 
+
+```bash
+curl https://dl.min.io/client/mc/release/linux-amd64/mc   --create-dirs   -o $HOME/minio-binaries/mc
+
+chmod +x $HOME/minio-binaries/mc
+```
+
+CREATE ALIAS 
+
+```bash
+mc alias set s3 10.72.5.6:9000 Mni2mST8Jefl6qnZkEFl 6AjO9Geqqf4GRUXxophcdzKvSAUSMhCXA9Dg8NK6
+```
+
+
+NOW GENERATE THE JOB 
+```bash
+mc admin prometheus generate ALIAS
 ```

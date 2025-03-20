@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-exporter
+  namespace: xconnected
+  labels:
+    app: mongodb-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb-exporter
+  template:
+    metadata:
+      labels:
+        app: mongodb-exporter
+    spec:
+      containers:
+        - name: mongodb-exporter
+          image: bitnami/mongodb-exporter:0.11.0-debian-10-r75
+          args:
+            - "--mongodb.uri=mongodb://mongodb-user:mongodb-password@192.168.29.164:27017/admin"
+          ports:
+            - containerPort: 9216
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-exporter
+  namespace: xconnected
+spec:
+  selector:
+    app: mongodb-exporter
+  ports:
+    - protocol: TCP
+      port: 9216
+      targetPort: 9216
+  type: ClusterIP
