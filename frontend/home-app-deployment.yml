@@ -19,7 +19,7 @@ spec:
         - name: regcred
       containers:
       - name: home-app
-        image: xconnected/components:home-app-2.5
+        image: xconnected/components:home-app-3.0
         imagePullPolicy: Always
         ports:
         - containerPort: 4200

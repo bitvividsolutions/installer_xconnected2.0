@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: itms-app
+  name: courtcases-app
   namespace: xconnected
   labels:
-    app: itms-app
+    app: courtcases-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: itms-app
+      app: courtcases-app
   template:
     metadata:
       labels:
-        app: itms-app
+        app: courtcases-app
     spec:
       imagePullSecrets:
         - name: regcred
       containers:
-      - name: itms-app
-        image: xconnected/components:itms-app-3.0
+      - name: courtcases-app
+        image: xconnected/components:courtcases-app-3.0
         imagePullPolicy: Always
         ports:
-        - containerPort: 4201
+        - containerPort: 4205

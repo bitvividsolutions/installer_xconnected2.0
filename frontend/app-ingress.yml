@@ -24,6 +24,34 @@ spec:
             name: config-app
             port:
               number: 4202
+      - path: /courtcases-app
+        pathType: Prefix
+        backend:
+          service:
+            name: courtcases-app
+            port:
+              number: 4205
+      - path: /people-app
+        pathType: Prefix
+        backend:
+          service:
+            name: people-app
+            port:
+              number: 4206
+      - path: /accidents-app
+        pathType: Prefix
+        backend:
+          service:
+            name: accidents-app
+            port:
+              number: 4204
+      - path: /gpva-app
+        pathType: Prefix
+        backend:
+          service:
+            name: gpva-app
+            port:
+              number: 4203
       - path: /
         pathType: Prefix
         backend:

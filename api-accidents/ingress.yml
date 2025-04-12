@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: accidents-api-ingress
+  namespace: xconnected
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    # traefik.ingress.kubernetes.io/router.rule: "PathPrefix(`/api-config`,`/static`)"
+spec:
+  rules:
+  - 
+    http:
+      paths:
+      - path: /api-accidents
+        pathType: Prefix
+        backend:
+          service:
+            name: accidents-api
+            port:
+              number: 8003
+      - path: /static
+        pathType: Prefix
+        backend:
+          service:
+            name: accidents-api
+            port:
+              number: 8003

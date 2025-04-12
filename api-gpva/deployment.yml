@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gpva-api-deployment
+  namespace: xconnected
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gpva-api
+  template:
+    metadata:
+      labels:
+        app: gpva-api
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+      - name: gpva-api
+        image: xconnected/components:gpva-api-3.0
+        imagePullPolicy: Always
+        args:
+        - uvicorn 
+        - main:app
+        - --host
+        - "0.0.0.0"
+        - --port
+        - "8002"
+        env:
+        - name: ADMIN_EMAIL
+          value: "amans@bitvividsolutions.com"
+        - name: APP_NAME
+          value: "GPVA APIS"
+        - name: MONGO_CONNECTION_URL
+          value: "mongodb://root:password@mongodb:27017/?retryWrites=true&w=majority"
+        - name: ITMS_MODE
+          value: "PROD"
+        - name: APP_VERSION
+          value: "0.2"
+        - name: ITMS_FE_URL
+          value: "https://www.google.com"
+        - name: SUB_PATH
+          value: "/api-gpva/v1"
+        - name: DOCS_PATH
+          value: "/api-gpva/swagger"
+        - name: LOGGER_FILE
+          value: "gpva_logs.log"
+        - name: AUTH_URL
+          value: "http://192.168.29.164:8080/auth"
+        - name: REALM_NAME
+          value: "XconnectedAuthentication"
+        - name: CLIENT_ID
+          value: "itms"
+        - name: CLIENT_SECRET
+          value: "UdpmcCb8IVlbDvkTEzLlS8DEPyYHCHag"
+        - name: MINIO_ENDPOINT
+          value: "10.72.5.6:9000"
+        - name: MINIO_ACCESS_KEY
+          value: "Mni2mST8Jefl6qnZkEFl"
+        - name: MINIO_SECRET_KEY
+          value: "6AjO9Geqqf4GRUXxophcdzKvSAUSMhCXA9Dg8NK6"
+        - name: ITMS_BUCKET_NAME
+          value: "itms-blob-storage"
+        - name: CHALLAN_BUCKET_NAME
+          value: "challan-objects"

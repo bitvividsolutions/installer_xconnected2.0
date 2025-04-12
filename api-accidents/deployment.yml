@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accidents-api
+  namespace: xconnected
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: accidents-api
+  template:
+    metadata:
+      labels:
+        app: accidents-api
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+      - name: accidents-api
+        image: xconnected/components:accidents-api-3.0
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8003
+        env:
+          - name: SECRET_KEY
+            value: "tt+f#9@g2g&&2n#(5+yf+gog^%49djq-#z)w^-%9wjq$=7j^62"
+          - name: APP_MODE
+            value: "PROD"
+          - name: DEBUG
+            value: "false"
+          - name: ALLOWED_HOSTS
+            value: "localhost,10.72.5.6,127.0.0.1"
+          - name: BASE_PREFIX
+            value: "api-accidents"
+          - name: ANALYTICS_GROUP_PATH
+            value: "/media"
+          - name: POSTGRES_NAME
+            value: "accidents"
+          - name: POSTGRES_USER
+            value: "postgres"
+          - name: POSTGRES_PASSWORD
+            value: "postgres"
+          - name: POSTGRES_HOST
+            value: "192.168.29.164"
+          - name: POSTGRES_PORT
+            value: "5432"
+          - name: KEYCLOAK_BASEURL
+            value: "http://10.72.5.6/auth"
+          - name: KEYCLOAK_CLIENT_ID
+            value: "conf-app"
+          - name: KEYCLOAK_CLIENT_SECRET
+            value: "XGHX4s3LAD8fEsY5lYWjOdQaeGMbvYHh"
+          - name: KEYCLOAK_REALM
+            value: "XconnectedAuthentication"
+          - name: OIDC_RP_SIGN_ALGO
+            value: "RS256"
+          - name: KAFKA_BOOTSTRAP_SERVERS
+            value: "10.72.5.6:9093"
+          - name: MINIO_URL
+            value: "10.72.5.6:9000"
+          - name: MINIO_SECURE
+            value: "False"
+          - name: MINIO_ACCESS_KEY
+            value: "Mni2mST8Jefl6qnZkEFl"
+          - name: MINIO_SECRET_KEY
+            value: "6AjO9Geqqf4GRUXxophcdzKvSAUSMhCXA9Dg8NK6"
+          - name: MINIO_BUCKET_NAME
+            value: "analytics-assets"
+        volumeMounts:
+          - mountPath: "/media"
+            name: media-volume
+      volumes:
+        - name: media-volume
+          persistentVolumeClaim:
+            claimName: accidents-api-pvc
