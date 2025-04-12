@@ -1,5 +1,9 @@
 ### TO INSTALL THE K3S MONITOR INSTALL THIS HELM PACKAGE SPECIFIC TO VMS
 ```bash
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 helm install kube-state-metrics prometheus-community/kube-state-metrics -n xconnected --create-namespace
