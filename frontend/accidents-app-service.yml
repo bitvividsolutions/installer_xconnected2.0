@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: accidents-app
+  namespace: xconnected
+  labels:
+    app: accidents-app
+spec:
+  ports:
+  - port: 4204
+    targetPort: 4204
+  selector:
+    app: accidents-app
+  type: ClusterIP

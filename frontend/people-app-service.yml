@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: people-app
+  namespace: xconnected
+  labels:
+    app: people-app
+spec:
+  ports:
+  - port: 4206
+    targetPort: 4206
+  selector:
+    app: people-app
+  type: ClusterIP
