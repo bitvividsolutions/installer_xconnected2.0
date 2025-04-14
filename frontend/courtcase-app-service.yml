@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: courtcases-app
+  name: courtcase-app
   namespace: xconnected
   labels:
-    app: courtcases-app
+    app: courtcase-app
 spec:
   ports:
   - port: 4205
     targetPort: 4205
   selector:
-    app: courtcases-app
+    app: courtcase-app
   type: ClusterIP

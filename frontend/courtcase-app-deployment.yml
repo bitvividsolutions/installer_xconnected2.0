@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: courtcases-app
+  name: courtcase-app
   namespace: xconnected
   labels:
-    app: courtcases-app
+    app: courtcase-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: courtcases-app
+      app: courtcase-app
   template:
     metadata:
       labels:
-        app: courtcases-app
+        app: courtcase-app
     spec:
       imagePullSecrets:
         - name: regcred
       containers:
-      - name: courtcases-app
+      - name: courtcase-app
         image: xconnected/components:courtcases-app-3.0
-        imagePullPolicy: Always
+        #imagePullPolicy: Always
         ports:
         - containerPort: 4205
